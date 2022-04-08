@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Add new vinyl record</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>	
+<h1>Add new vinyl record</h1>
+<div>
+<form th:object="${vinyl}" th:action="@{save}" action="#" method="post">
+
+	<label for="vinylName">Album</label>
+	<input type="text" id="vinylName" th:field="*{vinylName}" />
+	<br>
+	<label for="vinylArtist">Artist</label>
+	<input type="text" id="vinylArtist" th:field="*{vinylArtist}" />
+	<br>
+	<label for="vinylYear">Year</label>
+	<input type="text" id="vinylYear" th:field="*{vinylYear}" />
+	<br>
+	<label for="vinylGenre">Genre</label>
+	<input type="text" id="vinylGenre" th:field="*{vinylGenre}" />
+	<br>
+	<label for="vinylFormat">Format</label>
+	<input type="text" id="vinylFormat" th:field="*{vinylFormat}" />
+	<br>
+	<label for="vinylDetails">Details</label>
+	<input type="text" id="vinylDetails" th:field="*{vinylDetails}" />
+	
+	<input type="submit" value="Save"></input>
+	<!--
+	<label for="category">Category</label>
+	<select id="category" th:field="*{category}" class="form-control">
+	<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+	</select>
+	<br>
+	-->
+	
+</form>
+</div>
+</body>
+</html>

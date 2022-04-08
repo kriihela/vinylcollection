@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Vinyl records</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Vinyl Records</a>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+				aria-controls="navbarColor02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarColor02">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li class="nav-item"><a class="btn btn-outline-success"
+						href="/add">Add new vinyl</a></li>
+				</ul>
+
+				<form class="d-flex">
+					<input class="form-control me-sm-2" type="text"
+						placeholder="Search">
+					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Album</th>
+					<th scope="col">Artist</th>
+					<th scope="col">Year</th>
+					<th scope="col">Genre</th>
+					<th scope="col">Format</th>
+					<th scope="col">Details</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="table-active" th:each="vinyl : ${vinyls}">
+					<td th:text="${vinyl.vinylName}"></td>
+					<td th:text="${vinyl.vinylArtist}"></td>
+					<td th:text="${vinyl.vinylYear}"></td>
+					<td th:text="${vinyl.vinylGenre}"></td>
+					<td th:text="${vinyl.vinylFormat}"></td>
+					<td th:text="${vinyl.vinylDetails}"></td>
+					<td><a
+						th:href="@{/delete/{vinylId}(vinylId=${vinyl.vinylId})}"
+						class="btn btn-outline-danger">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
