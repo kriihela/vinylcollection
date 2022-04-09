@@ -12,8 +12,10 @@
 	<label for="vinylName">Album</label>
 	<input type="text" id="vinylName" th:field="*{vinylName}" />
 	<br>
-	<label for="vinylArtist">Artist</label>
-	<input type="text" id="vinylArtist" th:field="*{vinylArtist}" />
+	<label for="artist">Artist</label>
+	<select id="artist" th:field="*{artist}" class="form-control">
+	<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
+	</select>
 	<br>
 	<label for="vinylYear">Year</label>
 	<input type="text" id="vinylYear" th:field="*{vinylYear}" />
@@ -27,14 +29,8 @@
 	<label for="vinylDetails">Details</label>
 	<input type="text" id="vinylDetails" th:field="*{vinylDetails}" />
 	
-	<input type="submit" value="Save"></input>
-	<!--
-	<label for="category">Category</label>
-	<select id="category" th:field="*{category}" class="form-control">
-	<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
-	</select>
-	<br>
-	-->
+	<input type="submit" value="Save" />
+	<input type="reset" value="Reset" />
 	
 </form>
 </div>

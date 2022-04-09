@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.example.vinyylilista.domain.Artist;
 import com.example.vinyylilista.domain.ArtistRepository;
 import com.example.vinyylilista.domain.Vinyl;
 import com.example.vinyylilista.domain.VinylRepository;
@@ -22,10 +23,17 @@ public class VinyylilistaApplication {
 	@Bean
 	public CommandLineRunner demo(VinylRepository vinylRepository, ArtistRepository artistRepository) {
 		return (args) -> {
-			log.info("save a couple of records");
+			log.info("save artists");
+			Artist a1 = new Artist("aaa");
+			Artist a2 = new Artist("bbb");
+			
+			artistRepository.save(a1);
+			artistRepository.save(a2);
+			
+			log.info("save records");
 
-		Vinyl v1 = new Vinyl("record", "artist", 1990, "genre", "format", "details");
-		Vinyl v2 = new Vinyl("ardfgfdg", "recorgdfgdfgd", 1990, "gefgfdgnre", "fdfgormat", "dedfgdfgtails");
+		Vinyl v1 = new Vinyl("record", a1, 1990, "genre", "format", "details");
+		Vinyl v2 = new Vinyl("ardfgfdg", a1, 1990, "gefgfdgnre", "fdfgormat", "dedfgdfgtails");
 		
 		vinylRepository.save(v1);
 		vinylRepository.save(v2);

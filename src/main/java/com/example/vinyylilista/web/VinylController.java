@@ -1,6 +1,7 @@
 package com.example.vinyylilista.web;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,13 +28,20 @@ public class VinylController {
 		model.addAttribute("vinyls", vinylRepository.findAll());
 		return "index";
 	}
+	//REST all vinyls
 	@GetMapping("/vinyls")
 	public @ResponseBody List<Vinyl> vinylListRest() {	
 		return (List<Vinyl>) vinylRepository.findAll();
 	}
+	//REST vinyl by id
+	@GetMapping("/vinyl/{vinylId}")
+	public @ResponseBody Optional<Vinyl> findVinylRest(@PathVariable("vinylId") Long vinylId) {
+		return vinylRepository.findById(vinylId);
+	}
 	@GetMapping("/add")
 	public String addVinyl(Model model) {
 		model.addAttribute("vinyl", new Vinyl());
+		model.addAttribute("artists", artistRepository.findAll());
 		return "addvinyl";
 	}
 	@PostMapping(value = "/save")
@@ -46,4 +54,11 @@ public class VinylController {
 		vinylRepository.deleteById(vinylId);
 		return "redirect:../index";
 	}
+	@GetMapping(value = "/edit/{vinylId}")
+	public String editVinyl(@PathVariable("vinylId") Long vinylId, Model model) {
+		model.addAttribute("vinyl", vinylRepository.findById(vinylId));
+		model.addAttribute("artists", artistRepository.findAll());
+		return "editvinyl";
+	}
+
 }

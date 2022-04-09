@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Artist list</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>	
+<h1>Add artist</h1>
+<div>
+<form th:object="${artist}" th:action="@{saveartist}" action="#" method="post">
+	<label for="name">Artist name</label>
+	<input type="text" id="name" th:field="*{artistName}" />
+	<br><br>
+	<input type="submit" value="Save" />
+	<input type="reset" value="Reset" />
+	
+</form>
+</div>
+</body>
+</html>

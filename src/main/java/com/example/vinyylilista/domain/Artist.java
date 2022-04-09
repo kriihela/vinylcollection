@@ -23,6 +23,14 @@ public class Artist {
 	@JsonIgnoreProperties("artist")
 	private List<Vinyl> vinyls;
 	
+	public List<Vinyl> getVinyls() {
+		return vinyls;
+	}
+
+	public void setVinyls(List<Vinyl> vinyls) {
+		this.vinyls = vinyls;
+	}
+
 	public Artist() {}
 	
 	public Artist(String artistName) {

@@ -53,7 +53,7 @@
 			<tbody>
 				<tr class="table-active" th:each="vinyl : ${vinyls}">
 					<td th:text="${vinyl.vinylName}"></td>
-					<td th:text="${vinyl.vinylArtist}"></td>
+					<td th:text="${vinyl.artist.artistName}"></td>
 					<td th:text="${vinyl.vinylYear}"></td>
 					<td th:text="${vinyl.vinylGenre}"></td>
 					<td th:text="${vinyl.vinylFormat}"></td>
