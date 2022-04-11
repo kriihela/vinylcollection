@@ -1,38 +1,93 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-	<title>Add new vinyl record</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add new vinyl record</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body>	
-<h1>Add new vinyl record</h1>
-<div>
-<form th:object="${vinyl}" th:action="@{save}" action="#" method="post">
 
-	<label for="vinylName">Album</label>
-	<input type="text" id="vinylName" th:field="*{vinylName}" />
-	<br>
-	<label for="artist">Artist</label>
-	<select id="artist" th:field="*{artist}" class="form-control">
-	<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
-	</select>
-	<br>
-	<label for="vinylYear">Year</label>
-	<input type="text" id="vinylYear" th:field="*{vinylYear}" />
-	<br>
-	<label for="vinylGenre">Genre</label>
-	<input type="text" id="vinylGenre" th:field="*{vinylGenre}" />
-	<br>
-	<label for="vinylFormat">Format</label>
-	<input type="text" id="vinylFormat" th:field="*{vinylFormat}" />
-	<br>
-	<label for="vinylDetails">Details</label>
-	<input type="text" id="vinylDetails" th:field="*{vinylDetails}" />
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Vinyl Records</a>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+				aria-controls="navbarColor02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarColor02">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success"
+						href="/add">Add new vinyl</a></li>
+				</ul>
+				
+				<div th:if="${param.error}">
+				Invalid username and password.
+				</div>
+				<div th:if="${param.logout}">
+           		 You have been logged out.
+       			 </div>
+				
+				<form th:action="@{/login}" method="post">
+				<div sec:authorize="!hasAuthority('ADMIN')">
+				<label> User Name : <input type="text" name="username"/> </label>
+				<label> Password: <input type="password" name="password"/> </label>
+				<input type="submit" value="Sign In"/></div>
+				</form>
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post"> <input type="submit" value="Sign Out"/></form>
+				<!-- 
+				<form class="d-flex">
+					<input class="form-control me-sm-2" type="text"
+						placeholder="Search">
+					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				 -->
+			</div>
+		</div>
+	</nav>
+
+<body>
+	<h2 align="center" class="text-muted">Add new vinyl record</h2>
 	
-	<input type="submit" value="Save" />
-	<input type="reset" value="Reset" />
-	
-</form>
-</div>
+	<div class="form-group" align="center">
+		  
+			<form th:object="${vinyl}" th:action="@{save}" action="#" method="post">
+		
+			<label for="vinylName" class="form-label mb-3">Album</label>
+			<br>
+			<input type="text" id="vinylName" th:field="*{vinylName}" />
+			<br>
+			<label for="artist" class="form-label mt-4">Artist</label>
+			<select id="artist" th:field="*{artist}" class="form-select">
+			<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
+			</select>
+			<br>
+			<label for="vinylYear" class="form-label mb-3">Year</label>
+			<br>
+			<input type="text" id="vinylYear" th:field="*{vinylYear}" />
+			<br>
+			<label for="vinylGenre" class="form-label mb-3">Genre</label>
+			<br>
+			<input type="text" id="vinylGenre" th:field="*{vinylGenre}" />
+			<br>
+			<label for="vinylFormat" class="form-label mb-3">Format</label>
+			<br>
+			<input type="text" id="vinylFormat" th:field="*{vinylFormat}" />
+			<br>
+			<label for="vinylDetails" class="form-label mb-3">Details</label>
+			<br>
+			<input type="text" id="vinylDetails" th:field="*{vinylDetails}" />
+			<br><br>
+			<input type="submit" value="Save" />
+			<input type="reset" value="Reset" />
+		</form>
+		</div>
 </body>
 </html>

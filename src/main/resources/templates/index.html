@@ -2,7 +2,9 @@
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
 	th:href="@{css/bootstrap.min.css}" />
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	
 <head>
 <title>Vinyl records</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -24,15 +26,31 @@
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item"><a class="btn btn-outline-success"
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success"
 						href="/add">Add new vinyl</a></li>
 				</ul>
-
+				
+				<div th:if="${param.error}">
+				Invalid username and password.
+				</div>
+				<div th:if="${param.logout}">
+           		 You have been logged out.
+       			 </div>
+				
+				<form th:action="@{/login}" method="post">
+				<div sec:authorize="!hasAuthority('ADMIN')">
+				<label> User Name : <input type="text" name="username"/> </label>
+				<label> Password: <input type="password" name="password"/> </label>
+				<input type="submit" value="Sign In"/></div>
+				</form>
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post"> <input type="submit" value="Sign Out"/></form>
+				<!-- 
 				<form class="d-flex">
 					<input class="form-control me-sm-2" type="text"
 						placeholder="Search">
 					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 				</form>
+				 -->
 			</div>
 		</div>
 	</nav>
@@ -50,6 +68,7 @@
 					<th></th>
 				</tr>
 			</thead>
+			
 			<tbody>
 				<tr class="table-active" th:each="vinyl : ${vinyls}">
 					<td th:text="${vinyl.vinylName}"></td>
@@ -58,9 +77,8 @@
 					<td th:text="${vinyl.vinylGenre}"></td>
 					<td th:text="${vinyl.vinylFormat}"></td>
 					<td th:text="${vinyl.vinylDetails}"></td>
-					<td><a
-						th:href="@{/delete/{vinylId}(vinylId=${vinyl.vinylId})}"
-						class="btn btn-outline-danger">Delete</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{vinylId}(vinylId=${vinyl.vinylId})}" class="btn btn-outline-danger">Delete</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{vinylId}(vinylId=${vinyl.vinylId})}" class= "btn btn-warning">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>

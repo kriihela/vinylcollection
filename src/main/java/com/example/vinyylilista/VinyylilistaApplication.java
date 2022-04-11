@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.vinyylilista.domain.Artist;
 import com.example.vinyylilista.domain.ArtistRepository;
+import com.example.vinyylilista.domain.User;
+import com.example.vinyylilista.domain.UserRepository;
 import com.example.vinyylilista.domain.Vinyl;
 import com.example.vinyylilista.domain.VinylRepository;
 
@@ -21,7 +23,7 @@ public class VinyylilistaApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner demo(VinylRepository vinylRepository, ArtistRepository artistRepository) {
+	public CommandLineRunner demo(VinylRepository vinylRepository, ArtistRepository artistRepository, UserRepository userRepository) {
 		return (args) -> {
 			log.info("save artists");
 			Artist a1 = new Artist("aaa");
@@ -32,11 +34,17 @@ public class VinyylilistaApplication {
 			
 			log.info("save records");
 
-		Vinyl v1 = new Vinyl("record", a1, 1990, "genre", "format", "details");
-		Vinyl v2 = new Vinyl("ardfgfdg", a1, 1990, "gefgfdgnre", "fdfgormat", "dedfgdfgtails");
+			Vinyl v1 = new Vinyl("record", a1, 1990, "genre", "format", "details");
+			Vinyl v2 = new Vinyl("ardfgfdg", a1, 1990, "gefgfdgnre", "fdfgormat", "dedfgdfgtails");
 		
-		vinylRepository.save(v1);
-		vinylRepository.save(v2);
+			vinylRepository.save(v1);
+			vinylRepository.save(v2);
+		
+			User user = new User("admin", "$2a$10$XBS.2lf8thYKQbdombpI6u1bwgAyoAGMyLFij8jC1.vzofJ7Ccxli", "ADMIN");
+		
+			userRepository.save(user);
+		
+		
 		
 		log.info("fetch all vinyls");
 		for (Vinyl vinyl : vinylRepository.findAll()) {
