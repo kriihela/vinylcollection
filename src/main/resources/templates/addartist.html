@@ -1,18 +1,67 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-	<title>Artist list</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Edit vinyl record</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>	
-<h1>Add artist</h1>
-<div>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Vinyl Records</a>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+				aria-controls="navbarColor02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarColor02">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success"
+						href="/add">Add new vinyl</a></li>
+				</ul>
+				
+				<div th:if="${param.error}">
+				Invalid username and password.
+				</div>
+				<div th:if="${param.logout}">
+           		 You have been logged out.
+       			 </div>
+				
+				<form th:action="@{/login}" method="post">
+				<div sec:authorize="!hasAuthority('ADMIN')">
+				<label> User Name : <input type="text" name="username"/> </label>
+				<label> Password: <input type="password" name="password"/> </label>
+				<input type="submit" value="Sign In"/></div>
+				</form>
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out"/></form>
+				<!-- 
+				<form class="d-flex">
+					<input class="form-control me-sm-2" type="text"
+						placeholder="Search">
+					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				 -->
+			</div>
+		</div>
+	</nav>
+<h2 align="center" class="text-muted">Add artist</h2>
+<div class="form-group" align="center">
 <form th:object="${artist}" th:action="@{saveartist}" action="#" method="post">
-	<label for="name">Artist name</label>
+	<label for="name">Artist name</label><br>
 	<input type="text" id="name" th:field="*{artistName}" />
 	<br><br>
-	<input type="submit" value="Save" />
-	<input type="reset" value="Reset" />
+			<input class="btn btn-success" type="submit" value="Save"></input>
+			<input class="btn btn-dark" type="reset" value="Reset" />
 	
 </form>
 </div>

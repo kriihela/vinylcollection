@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.vinyylilista.domain.Artist;
 import com.example.vinyylilista.domain.ArtistRepository;
-import com.example.vinyylilista.domain.Vinyl;
 
 @Controller
 public class ArtistController {
@@ -34,7 +34,7 @@ public class ArtistController {
 	@PostMapping("/saveartist")
 	public String save(Artist artist) {
 		artistRepository.save(artist);
-		return "redirect:artistlist";
+		return "redirect:add";
 	}
 	//REST all artists
 	@GetMapping("/artists")
