@@ -92,7 +92,7 @@ public class VinyylilistaApplication {
 			Vinyl burn = new Vinyl("Burn", deepPurple, 1974, "Rock", "12-inch", "-");
 			Vinyl inRock = new Vinyl("Deep Purple In Rock", deepPurple, 1970, "Rock", "12-inch", "-");
 			Vinyl fireball = new Vinyl("Fireball", deepPurple, 1971, "Rock", "12-inch", "-");
-			Vinyl absolutelyLive = new Vinyl("Absolutely Live", theDoors, 1970, "Rock", "12-inch", "2 x LP");
+			Vinyl absolutelyLive = new Vinyl("Absolutely Live", theDoors, 1970, "Psychedelic Rock", "12-inch", "2 x LP");
 			Vinyl strangeDays = new Vinyl("Strange Days", theDoors, 1967, "Psychedelic Rock", "12-inch", "Mono mix");
 			Vinyl theDoorsSelfTitled = new Vinyl("The Doors", theDoors, 1967, "Psychedelic Rock", "12-inch", "Mono mix");
 			Vinyl maaan = new Vinyl("Määän", dxxxaDNukkehallitus, 2017, "Avant-garde", "12-inch", "Craziest shit I've got");
