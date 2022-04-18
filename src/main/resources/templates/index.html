@@ -6,6 +6,11 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Vinyl records</title>
+<!-- this is for jquery
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+ -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -13,7 +18,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Vinyl Records</a>
-<!-- 
+			<!-- 
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
 				aria-controls="navbarColor02" aria-expanded="false"
@@ -27,49 +32,49 @@
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/artistlist">Artists</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success"
-						href="/add">Add new vinyl</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a
+						class="btn btn-outline-success" href="/add">Add new vinyl</a></li>
 				</ul>
-				
-				<div th:if="${param.error}">
-				Invalid username and password.
-				</div>
-				<div th:if="${param.logout}">
-           		 You have been logged out.
-       			 </div>
-				
+
+				<div th:if="${param.error}">Invalid username and password.</div>
+				<div th:if="${param.logout}">You have been logged out.</div>
+
 				<form th:action="@{/login}" method="post">
-				<div sec:authorize="!hasAuthority('ADMIN')">
-				<label> User Name : <input type="text" name="username"/> </label>
-				<label> Password: <input type="password" name="password"/> </label>
-				<input type="submit" value="Sign In"/></div>
+					<div sec:authorize="!hasAuthority('ADMIN')">
+						<label> User Name : <input type="text" name="username" />
+						</label> <label> Password: <input type="password" name="password" />
+						</label> <input type="submit" value="Sign In" />
+					</div>
 				</form>
-				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post"> <input type="submit" value="Sign Out"/></form>
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
+					method="post">
+					<input type="submit" value="Sign Out" />
+				</form>
 				<!-- 
 				<form class="d-flex" th:action="@{/vinyls}" method="get">
 					<input class="form-control me-sm-2" type="text" placeholder="Search" name="vinyl.vinylName">
 					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 				</form>
-				 -->				 
+				 -->
 			</div>
 		</div>
 	</nav>
 
 	<div>
-		<table class="table table-hover">
+		<table id="vinylTable" class="table table-hover">
 			<thead>
 				<tr>
-					<th scope="col">Album</th>
-					<th scope="col">Artist</th>
-					<th scope="col">Year</th>
-					<th scope="col">Genre</th>
-					<th scope="col">Format</th>
+					<th onclick="sortTable(0)" scope="col">Album</th>
+					<th onclick="sortTable(1)" scope="col">Artist</th>
+					<th onclick="sortTable(2)" scope="col">Year</th>
+					<th onclick="sortTable(3)" scope="col">Genre</th>
+					<th onclick="sortTable(4)" scope="col">Format</th>
 					<th scope="col">Details</th>
 					<th></th>
 					<th></th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
 				<tr class="table-active" th:each="vinyl : ${vinyls}">
 					<td th:text="${vinyl.vinylName}"></td>
@@ -78,11 +83,76 @@
 					<td th:text="${vinyl.vinylGenre}"></td>
 					<td th:text="${vinyl.vinylFormat}"></td>
 					<td th:text="${vinyl.vinylDetails}"></td>
-					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{vinylId}(vinylId=${vinyl.vinylId})}" class="btn btn-outline-danger">Delete</a></td>
-					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{vinylId}(vinylId=${vinyl.vinylId})}" class= "btn btn-warning">Edit</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a
+						th:href="@{/delete/{vinylId}(vinylId=${vinyl.vinylId})}"
+						class="btn btn-outline-danger">Delete</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a
+						th:href="@{/edit/{vinylId}(vinylId=${vinyl.vinylId})}"
+						class="btn btn-warning">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+
+	<script>
+		//script from w3schools
+		function sortTable(n) {
+			var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+			table = document.getElementById("vinylTable");
+			switching = true;
+			//Set the sorting direction to ascending:
+			dir = "asc";
+			/*Make a loop that will continue until
+			no switching has been done:*/
+			while (switching) {
+				//start by saying: no switching is done:
+				switching = false;
+				rows = table.rows;
+				/*Loop through all table rows (except the
+				first, which contains table headers):*/
+				for (i = 1; i < (rows.length - 1); i++) {
+					//start by saying there should be no switching:
+					shouldSwitch = false;
+					/*Get the two elements you want to compare,
+					one from current row and one from the next:*/
+					x = rows[i].getElementsByTagName("TD")[n];
+					y = rows[i + 1].getElementsByTagName("TD")[n];
+					/*check if the two rows should switch place,
+					based on the direction, asc or desc:*/
+					if (dir == "asc") {
+						if (x.innerHTML.toLowerCase() > y.innerHTML
+								.toLowerCase()) {
+							//if so, mark as a switch and break the loop:
+							shouldSwitch = true;
+							break;
+						}
+					} else if (dir == "desc") {
+						if (x.innerHTML.toLowerCase() < y.innerHTML
+								.toLowerCase()) {
+							//if so, mark as a switch and break the loop:
+							shouldSwitch = true;
+							break;
+						}
+					}
+				}
+				if (shouldSwitch) {
+					/*If a switch has been marked, make the switch
+					and mark that a switch has been done:*/
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+					//Each time a switch is done, increase this count by 1:
+					switchcount++;
+				} else {
+					/*If no switching has been done AND the direction is "asc",
+					set the direction to "desc" and run the while loop again.*/
+					if (switchcount == 0 && dir == "asc") {
+						dir = "desc";
+						switching = true;
+					}
+				}
+			}
+		}
+	</script>
+
 </body>
 </html>

@@ -54,7 +54,7 @@
 		</div>
 	</nav>
 <h2 align="center" class="text-muted">Add artist</h2>
-<div class="form-group" align="center">
+<div class="form-group" align="center">    
 <form th:object="${artist}" th:action="@{saveartist}" action="#" method="post">
 	<label for="name">Artist name</label><br>
 	<input type="text" id="name" th:field="*{artistName}" />
