@@ -6,60 +6,36 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Vinyl records</title>
-<!-- this is for jquery
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-	crossorigin="anonymous"></script>
- -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Vinyl Records</a>
-			<!-- 
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
-				aria-controls="navbarColor02" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
- -->
-
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/artistlist">Artists</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
 					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a
 						class="btn btn-outline-success" href="/add">Add new vinyl</a></li>
 				</ul>
-
-				<div th:if="${param.error}">Invalid username and password.</div>
-				<div th:if="${param.logout}">You have been logged out.</div>
-
 				<form th:action="@{/login}" method="post">
 					<div sec:authorize="!hasAuthority('ADMIN')">
 						<label> User Name : <input type="text" name="username" />
 						</label> <label> Password: <input type="password" name="password" />
-						</label> <input type="submit" value="Sign In" />
+						</label> <input type="submit" class="btn btn-outline-dark" value="Sign In" />
 					</div>
 				</form>
 				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
 					method="post">
-					<input type="submit" value="Sign Out" />
+					<input type="submit" class="btn btn-outline-dark" value="Sign Out" />
 				</form>
-				<!-- 
-				<form class="d-flex" th:action="@{/vinyls}" method="get">
-					<input class="form-control me-sm-2" type="text" placeholder="Search" name="vinyl.vinylName">
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-				</form>
-				 -->
 			</div>
 		</div>
 	</nav>
-
+	<img
+		src="https://pixabay.com/get/ged8724e3c9e10965854c32d6d54c8710a50f89905c9bfc2f54bf51d250c2ca115fc492e9898dcf3001c27f073b11a97a1eef7dd5b974c38ab66b4b5d10d2a41422db2478a788bdbd47ecd82b15e5bd33_1920.jpg"
+		style="width: 100%; max-width: 100%; opacity: 0, 8; border-radius: 10%;" />
 	<div>
 		<table id="vinylTable" class="table table-hover">
 			<thead>
@@ -74,7 +50,6 @@
 					<th></th>
 				</tr>
 			</thead>
-
 			<tbody>
 				<tr class="table-active" th:each="vinyl : ${vinyls}">
 					<td th:text="${vinyl.vinylName}"></td>
@@ -88,7 +63,7 @@
 						class="btn btn-outline-danger">Delete</a></td>
 					<td sec:authorize="hasAuthority('ADMIN')"><a
 						th:href="@{/edit/{vinylId}(vinylId=${vinyl.vinylId})}"
-						class="btn btn-warning">Edit</a></td>
+						class="btn btn-outline-warning">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -153,6 +128,5 @@
 			}
 		}
 	</script>
-
 </body>
 </html>

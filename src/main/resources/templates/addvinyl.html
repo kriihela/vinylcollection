@@ -9,52 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Vinyl Records</a>
-
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
-				aria-controls="navbarColor02" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success"
-						href="/add">Add new vinyl</a></li>
+					<li class="nav-item"><a class="nav-link" href="/artistlist">Artists</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a
+						class="btn btn-outline-success" href="/add">Add new vinyl</a></li>
 				</ul>
-				
-				<div th:if="${param.error}">
-				Invalid username and password.
-				</div>
-				<div th:if="${param.logout}">
-           		 You have been logged out.
-       			 </div>
-				
 				<form th:action="@{/login}" method="post">
-				<div sec:authorize="!hasAuthority('ADMIN')">
-				<label> User Name : <input type="text" name="username"/> </label>
-				<label> Password: <input type="password" name="password"/> </label>
-				<input type="submit" value="Sign In"/></div>
+					<div sec:authorize="!hasAuthority('ADMIN')">
+						<label> User Name : <input type="text" name="username" />
+						</label> <label> Password: <input type="password" name="password" />
+						</label> <input type="submit" class="btn btn-outline-dark" value="Sign In" />
+					</div>
 				</form>
-				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
-				<input type="submit" value="Sign Out"/></form>
-				<!-- 
-				<form class="d-flex">
-					<input class="form-control me-sm-2" type="text"
-						placeholder="Search">
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
+					method="post">
+					<input type="submit" class="btn btn-outline-dark" value="Sign Out" />
 				</form>
-				 -->
 			</div>
 		</div>
 	</nav>
-
 	<h2 align="center" class="text-muted">Add new vinyl record</h2>
 	
 	<div class="form-group" align="center">

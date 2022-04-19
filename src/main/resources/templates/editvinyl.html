@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
-	th:href="@{css/bootstrap.min.css}" />
+	th:href="@{/css/bootstrap.min.css}" />
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
@@ -8,85 +8,53 @@
 <title>Edit vinyl record</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body style="background-color:white">
-
+<body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">Vinyl Records</a>
-
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
-				aria-controls="navbarColor02" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success"
-						href="/add">Add new vinyl</a></li>
+					<li class="nav-item"><a class="nav-link" href="/artistlist">Artists</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
+					<a class="btn btn-outline-success" href="/add">Add new vinyl</a></li>
 				</ul>
-				
-				<div th:if="${param.error}">
-				Invalid username and password.
-				</div>
-				<div th:if="${param.logout}">
-           		 You have been logged out.
-       			 </div>
-				
 				<form th:action="@{/login}" method="post">
-				<div sec:authorize="!hasAuthority('ADMIN')">
-				<label> User Name : <input type="text" name="username"/> </label>
-				<label> Password: <input type="password" name="password"/> </label>
-				<input type="submit" value="Sign In"/></div>
+					<div sec:authorize="!hasAuthority('ADMIN')">
+						<label> User Name : <input type="text" name="username" />
+						</label> <label> Password: <input type="password" name="password" />
+						</label> <input type="submit" class="btn btn-outline-dark" value="Sign In" />
+					</div>
 				</form>
-				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
-				<input type="submit" value="Sign Out"/></form>
-				<!-- 
-				<form class="d-flex">
-					<input class="form-control me-sm-2" type="text"
-						placeholder="Search">
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
+					method="post">
+					<input type="submit" class="btn btn-outline-dark" value="Sign Out" />
 				</form>
-				 -->
 			</div>
 		</div>
 	</nav>
-
 	<h2 align="center" class="text-muted">Edit vinyl record</h2>
 	<div class="form-group" align="center">
 		<form th:object="${vinyl}" th:action="@{../save}" action="#" method="post">
-			<label for="id" ></label>
+			<label for="id"></label>
 			<input type="hidden" id="vinylId" th:field="*{vinylId}" readonly="readonly" />
 			<label for="artist" class="form-label mt-4">Artist</label>
-			<!--  
-			<div style="clear: both; display: block; height: 10px;"></div>
-			-->
-			<select id="artist" th:field="*{artist.artistId}" class="form-control">
+			<select id="artist" th:field="*{artist.artistId}" class="form-control" style="width: 20%">
 			<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
 			</select>
-			<br>
-			<label for="vinylName">Album name</label>
-			<input type="text" id="vinylName" th:field="*{vinylName}" />
-			<br>
-			<label for="vinylYear">Year</label>
-			<input type="text" id="vinylYear" th:field="*{vinylYear}" />
-			<br>
-			<label for="vinylGenre">Genre</label>
-			<input type="text" id="vinylGenre" th:field="*{vinylGenre}" />
-			<br>
-			<label for="vinylFormat">Format</label>
-			<input type="text" id="vinylFormat" th:field="*{vinylFormat}" />
-			<br>
-			<label for="vinylDetails">Details</label>
-			<input type="text" id="vinylDetails" th:field="*{vinylDetails}" />
-			<!-- 
-			<div style="clear: both; display: block; height: 10px;"></div>
-			 -->
+			<label for="vinylName">Album name</label><br>
+			<input type="text" id="vinylName" th:field="*{vinylName}" /><br>
+			<label for="vinylYear">Year</label><br>
+			<input type="text" id="vinylYear" th:field="*{vinylYear}" /><br>
+			<label for="vinylGenre">Genre</label><br>
+			<input type="text" id="vinylGenre" th:field="*{vinylGenre}" /><br>
+			<label for="vinylFormat">Format</label><br>
+			<input type="text" id="vinylFormat" th:field="*{vinylFormat}" /><br>
+			<label for="vinylDetails">Details</label><br>
+			<input type="text" id="vinylDetails" th:field="*{vinylDetails}" /><br><br>
 			
 			<input class="btn btn-success" type="submit" value="Save"></input>
+			
 		</form>
 	</div>
 </body>
