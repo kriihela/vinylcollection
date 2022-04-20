@@ -16,8 +16,7 @@
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/artistlist">Artists</a></li>
-					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a
-						class="btn btn-outline-success" href="/add">Add new vinyl</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a class="btn btn-outline-success" href="/add">Add new vinyl</a></li>
 				</ul>
 				<form th:action="@{/login}" method="post">
 					<div sec:authorize="!hasAuthority('ADMIN')">
@@ -26,40 +25,36 @@
 						</label> <input type="submit" class="btn btn-outline-dark" value="Sign In" />
 					</div>
 				</form>
-				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
-					method="post">
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
 					<input type="submit" class="btn btn-outline-dark" value="Sign Out" />
 				</form>
 			</div>
 		</div>
 	</nav>
 	<h2 align="center" class="text-muted">Add new vinyl record</h2>
-	
 	<div class="form-group" align="center">
-		  
 			<form th:object="${vinyl}" th:action="@{save}" action="#" method="post">
-		
 			<label for="artist" class="form-label mt-4">Artist</label>
-			<select id="artist" th:field="*{artist}" class="form-select" style="width: 20%">
+			<select id="artist" th:field="*{artist}" class="form-select" style="width: 12%">
 			<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
 			</select>
 			<p class="text-danger"><small>Can't find the artist? Click <a href="/addartist">here</a> to add new.</small></p>
 			<label for="vinylName" class="form-label mb-3">Album</label>
 			<br>
 			<input type="text" id="vinylName" th:field="*{vinylName}" />
-			<br><br>
+			<br>
 			<label for="vinylYear" class="form-label mb-3">Year</label>
 			<br>
 			<input type="text" id="vinylYear" th:field="*{vinylYear}" />
-			<br><br>
+			<br>
 			<label for="vinylGenre" class="form-label mb-3">Genre</label>
 			<br>
 			<input type="text" id="vinylGenre" th:field="*{vinylGenre}" />
-			<br><br>
+			<br>
 			<label for="vinylFormat" class="form-label mb-3">Format</label>
 			<br>
 			<input type="text" id="vinylFormat" th:field="*{vinylFormat}" />
-			<br><br>
+			<br>
 			<label for="vinylDetails" class="form-label mb-3">Details</label>
 			<br>
 			<input type="text" id="vinylDetails" th:field="*{vinylDetails}" />

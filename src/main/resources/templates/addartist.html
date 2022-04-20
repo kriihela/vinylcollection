@@ -26,8 +26,7 @@
 						</label> <input type="submit" class="btn btn-outline-dark" value="Sign In" />
 					</div>
 				</form>
-				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
-					method="post">
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
 					<input type="submit" class="btn btn-outline-dark" value="Sign Out" />
 				</form>
 			</div>
@@ -41,7 +40,6 @@
 	<br><br>
 			<input class="btn btn-success" type="submit" value="Save"></input>
 			<input class="btn btn-dark" type="reset" value="Reset" />
-	
 </form>
 </div>
 </body>

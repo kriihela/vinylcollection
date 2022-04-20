@@ -26,8 +26,7 @@
 						</label> <input type="submit" class="btn btn-outline-dark" value="Sign In" />
 					</div>
 				</form>
-				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}"
-					method="post">
+				<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
 					<input type="submit" class="btn btn-outline-dark" value="Sign Out" />
 				</form>
 			</div>
@@ -39,7 +38,7 @@
 			<label for="id"></label>
 			<input type="hidden" id="vinylId" th:field="*{vinylId}" readonly="readonly" />
 			<label for="artist" class="form-label mt-4">Artist</label>
-			<select id="artist" th:field="*{artist.artistId}" class="form-control" style="width: 20%">
+			<select id="artist" th:field="*{artist.artistId}" class="form-control" style="width: 12%">
 			<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
 			</select>
 			<label for="vinylName">Album name</label><br>
@@ -52,9 +51,7 @@
 			<input type="text" id="vinylFormat" th:field="*{vinylFormat}" /><br>
 			<label for="vinylDetails">Details</label><br>
 			<input type="text" id="vinylDetails" th:field="*{vinylDetails}" /><br><br>
-			
 			<input class="btn btn-success" type="submit" value="Save"></input>
-			
 		</form>
 	</div>
 </body>
